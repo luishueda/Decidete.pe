@@ -1,0 +1,110 @@
+<app-hero 
+  title="Comparador de Partidos Políticos"
+  description="Selecciona hasta 4 partidos para comparar sus propuestas y posiciones">
+</app-hero>
+
+<div class="max-w-[1200px] mx-auto my-20 px-5 flex flex-col items-center gap-5">
+  
+  <!-- SECCIÓN DE BÚSQUEDA -->
+  <div class="flex items-start w-fit mb-10 flex-wrap">
+    
+    <!-- Input con Pills -->
+    <div class="flex flex-wrap gap-2 items-center min-h-[43px] border border-gray-900 rounded-l-[40px] border-r-0 px-3 w-[840px] max-md:w-full max-md:rounded-[40px] max-md:border-r bg-white relative">
+      
+      <!-- Pills de partidos seleccionados -->
+      <div *ngFor="let partido of partidosSeleccionados" class="relative inline-block">
+        <div class="px-4 py-1 rounded-full text-sm font-semibold text-white shadow-md"
+             [style.background-color]="partido.pill_color || '#dc2626'">
+          {{ partido.candidato }}
+        </div>
+        <button 
+          (click)="eliminarPartido(partido)"
+          class="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-red-700 text-white border-none text-xs cursor-pointer flex items-center justify-center leading-none hover:bg-red-800">
+          ✕
+        </button>
+      </div>
+
+      <!-- Input de búsqueda -->
+      <div class="relative flex-1 min-w-[200px]">
+        <input 
+          type="text"
+          [(ngModel)]="searchTerm"
+          (focus)="dropdownOpen = true"
+          placeholder="Buscar partido o candidato..."
+          class="w-full h-8 border-none outline-none text-base bg-transparent placeholder:text-gray-400"
+        />
+
+        <!-- Dropdown de resultados -->
+        <div *ngIf="dropdownOpen && searchTerm && partidosFiltrados.length > 0"
+             class="absolute top-full left-0 w-full max-h-60 overflow-y-auto bg-white border border-gray-300 rounded-lg shadow-lg z-50 mt-1">
+          <div *ngFor="let partido of partidosFiltrados"
+               (click)="agregarPartido(partido)"
+               class="px-4 py-3 cursor-pointer hover:bg-gray-100 flex items-center gap-3 border-b border-gray-100 last:border-b-0">
+            <img [src]="partido.logo" [alt]="partido.candidato" class="w-8 h-8 object-contain rounded-full">
+            <span class="font-medium text-gray-800">{{ partido.candidato }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botón Comparar -->
+    <button 
+      (click)="handleComparar()"
+      [disabled]="isCompararDisabled"
+      [class.opacity-60]="isCompararDisabled"
+      [class.cursor-not-allowed]="isCompararDisabled"
+      class="px-0 bg-blue-600 text-white border border-gray-900 rounded-r-[40px] border-l-0 text-base font-bold cursor-pointer transition-all shadow-md min-w-[120px] h-[45px] m-0 max-md:hidden hover:bg-blue-700 disabled:bg-gray-400">
+      Comparar
+    </button>
+  </div>
+
+  <!-- TABLAS DE COMPARACIÓN -->
+  <div *ngIf="mostrarTablas && datosComparacion" class="flex flex-col gap-10 w-full">
+    
+    <!-- TABLA GENERAL -->
+    <div class="mt-10 w-full">
+      <table class="w-[75vw] max-w-[1080px] border-collapse overflow-hidden mx-auto table-fixed bg-white">
+        <!-- Logos -->
+        <thead>
+          <tr class="bg-white">
+            <th class="bg-transparent w-[200px]"></th>
+            <th *ngFor="let partido of partidosSeleccionados" class="p-4 text-center border-b-2 border-white">
+              <img [src]="partido.logo" [alt]="partido.lider" class="h-40 w-auto max-w-[160px] object-contain mx-auto">
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <!-- Nombres -->
+          <tr class="bg-white">
+            <td class="font-semibold bg-white text-right w-[200px] px-4 py-3 border-b border-gray-100">Nombre del partido</td>
+            <td *ngFor="let partido of partidosSeleccionados" 
+                class="font-bold text-base bg-white text-center px-4 py-3 border-b border-gray-100">
+              {{ datosComparacion[partido.candidato]?.['Nombre del partido'] || partido.candidato }}
+            </td>
+          </tr>
+
+          <!-- Datos generales -->
+          <tr *ngFor="let categoria of categoriasPrincipales" class="bg-white">
+            <td class="font-semibold bg-white text-right w-[200px] px-4 py-3 border-b border-gray-100">{{ categoria }}</td>
+            <td *ngFor="let partido of partidosSeleccionados"
+                class="text-center leading-relaxed px-4 py-3 border-b border-gray-100 min-w-[150px]">
+              {{ datosComparacion[partido.candidato || partido.lider]?.[categoria] || 'No disponible' }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- TABLAS POR CATEGORÍA (Opcional - si tienes datos específicos) -->
+    <!-- Aquí puedes agregar más tablas categorizadas si el backend las provee -->
+
+  </div>
+
+  <!-- Mensaje si no hay comparación -->
+  <div *ngIf="!mostrarTablas && partidosSeleccionados.length >= 2" 
+       class="text-center text-gray-600 mt-8">
+    <p class="text-lg">Haz clic en <strong>Comparar</strong> para ver las diferencias</p>
+  </div>
+
+</div>

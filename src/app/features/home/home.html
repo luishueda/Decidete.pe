@@ -1,0 +1,160 @@
+<div class="w-full">
+  <!-- Hero Section -->
+  <section class="flex items-center justify-center bg-gray-50 py-20 px-8 w-full">
+    <div class="flex items-center justify-between max-w-[1200px] w-full gap-20 max-lg:flex-col max-lg:gap-12 max-lg:text-center">
+      
+      <!-- Hero Text -->
+      <div class="flex-1 max-w-[500px] max-lg:max-w-full">
+        <h1 class="text-black text-[2.8rem] font-bold mb-5 leading-tight max-md:text-[2rem]">
+          Descubre que candidato piensa como tú
+        </h1>
+        <p class="text-black mb-8 font-sans font-normal text-base leading-relaxed max-md:text-[0.95rem]">
+          Compara ideas, responde preguntas y vota informado para las elecciones 2026.
+        </p>
+        <div class="flex gap-4 mt-8 max-md:flex-col max-md:w-full">
+          <a routerLink="/quiz" 
+             class="no-underline text-center px-7 py-3 rounded-lg font-sans font-semibold shadow-md transition-all duration-300 text-base whitespace-nowrap bg-red-700 text-white border-none hover:-translate-y-0.5 hover:shadow-lg max-md:w-full">
+            Hacer el quiz electoral
+          </a>
+          <a routerLink="/comparador" 
+             class="no-underline text-center px-7 py-3 rounded-lg font-sans font-semibold shadow-md transition-all duration-300 text-base whitespace-nowrap border-2 border-gray-800 bg-gray-800 text-white hover:-translate-y-0.5 hover:shadow-lg max-md:w-full">
+            Comparar Partidos
+          </a>
+        </div>
+      </div>
+      
+      <!-- Hero Image -->
+      <div class="flex-1 flex justify-center items-center">
+        <div class="max-w-[500px] w-full h-[400px] bg-red-50 rounded-3xl flex items-center justify-center max-md:max-w-[380px]">
+          <img *ngIf="heroBanner" [src]="heroBanner" alt="Ilustración cívica" class="max-w-full h-auto">
+          <span *ngIf="!heroBanner" class="text-red-700 text-6xl font-bold">★</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cómo Funciona Section -->
+  <section class="bg-white text-center py-20 px-8 w-auto">
+    <div>
+      <h2 class="text-black font-sans font-bold text-[2rem] px-4">
+        ¿Cómo funciona Decide.pe?
+      </h2>
+      <p class="text-black font-sans font-light text-base px-4 max-w-[800px] mx-auto">
+        Te ayudamos a tomar una decisión informada en 3 pasos simples.
+      </p>
+    </div>
+    <div class="flex justify-center gap-12 py-12 flex-wrap">
+      <app-card-home 
+        [imagen]="brainIcon"
+        titulo="Responde el quiz electoral"
+        texto="Preguntas rápidas sobre temas nacionales clave.">
+      </app-card-home>
+      <app-card-home 
+        [imagen]="barsIcon"
+        titulo="Conoce tus afinidades"
+        texto="Descubre qué candidatos comparten tus ideas.">
+      </app-card-home>
+      <app-card-home 
+        [imagen]="balanceIcon"
+        titulo="Compara las propuestas"
+        texto="Analiza planes de gobierno y decide con criterio.">
+      </app-card-home>
+    </div>
+  </section>
+
+  <!-- Voto Informado Banner (Rojo) -->
+  <section class="bg-red-700 py-16 px-8 text-center">
+    <div class="flex flex-col items-center justify-center max-w-[800px] mx-auto pb-8">
+      <h2 class="text-white font-sans font-bold text-[2rem] mb-4">
+        ¿Listo para votar informado?
+      </h2>
+      <p class="text-white font-sans font-light text-base leading-relaxed">
+        Responde el quiz en menos de 2 minutos y descubre tu afinidad con los candidatos.
+      </p>
+    </div>
+    <div class="mt-4">
+      <a routerLink="/quiz" 
+         class="bg-white text-red-700 no-underline px-8 py-3 rounded-lg font-sans font-semibold inline-block transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
+        COMENZAR QUIZ ELECTORAL
+      </a>
+    </div>
+  </section>
+
+  <!-- Compara Section -->
+  <section class="py-16 px-8 max-w-[1200px] mx-auto">
+    <h2 class="text-center text-black font-bold text-[2rem] mb-4">
+      Compara propuestas en segundos
+    </h2>
+    <p class="text-center text-black font-light text-base mb-8 max-w-[800px] mx-auto leading-relaxed">
+      Visualiza los planes de gobierno y encuentra coincidencias reales. Decide.pe te muestra las posturas por eje temático de forma simple y neutral.
+    </p>
+    <div class="flex justify-center py-8">
+      <app-table-home [data]="tablaData"></app-table-home>
+    </div>
+    <div class="flex justify-center mt-8">
+      <a routerLink="/comparador" 
+         class="flex items-center bg-red-700 text-white no-underline px-8 py-3 rounded-lg font-sans font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg">
+        IR AL COMPARADOR
+      </a>
+    </div>
+  </section>
+
+  <!-- CTA Stats Section -->
+  <section class="bg-gray-50 py-12 px-8">
+    <div class="flex items-center justify-around max-w-[1200px] mx-auto flex-wrap gap-8">
+      <div class="text-center flex-1 min-w-[150px]">
+        <h3 class="text-red-700 font-sans font-bold text-[2.5rem] mb-2">15.000+</h3>
+        <p class="text-black font-sans font-normal text-base">Usuarios activos</p>
+      </div>
+      <div class="text-center flex-1 min-w-[150px]">
+        <h3 class="text-red-700 font-sans font-bold text-[2.5rem] mb-2">25+</h3>
+        <p class="text-black font-sans font-normal text-base">Candidatos comparados</p>
+      </div>
+      <div class="text-center flex-1 min-w-[150px]">
+        <h3 class="text-red-700 font-sans font-bold text-[2.5rem] mb-2">100%</h3>
+        <p class="text-black font-sans font-normal text-base">Información verificada</p>
+      </div>
+      <div class="text-center flex-1 min-w-[150px]">
+        <h3 class="text-red-700 font-sans font-bold text-[2.5rem] mb-2">5 min</h3>
+        <p class="text-black font-sans font-normal text-base">Tiempo promedio</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portal Section (Black) -->
+  <section class="bg-[#070708] text-white py-12 px-4">
+    <h2 class="font-sans font-bold text-[2.5rem] text-center mb-12 tracking-wide max-md:text-[2rem]">
+      Portal de transparencia
+    </h2>
+    <div class="flex flex-row justify-center items-center gap-20 max-w-[1200px] mx-auto py-8 max-lg:flex-col max-lg:gap-12">
+      
+      <!-- Portal Image -->
+      <div class="flex-1">
+        <div class="w-full max-w-[500px] mx-auto h-[300px] bg-gradient-to-br from-gray-700 to-gray-900 rounded-2xl flex items-center justify-center">
+          <img *ngIf="portalImage" [src]="portalImage" [alt]="'Portal'" class="w-full max-w-[500px] h-auto block mx-auto">
+          <span *ngIf="!portalImage" class="text-white text-5xl">📄</span>
+        </div>
+      </div>
+      
+      <!-- Portal Text -->
+      <div class="flex-1">
+        <p class="font-sans font-light text-[1.5rem] leading-relaxed max-w-[550px] max-lg:text-center max-md:text-base">
+          Accede a documentos oficiales de los candidatos y partidos: planes de gobierno, hojas de vida y fuentes verificadas del Jurado Nacional de Elecciones.
+        </p>
+      </div>
+    </div>
+    
+    <!-- JNE Link -->
+    <div class="text-center mt-12">
+      <p class="font-sans font-light text-[0.95rem] opacity-90">
+        Todos los datos provienen del 
+        <a href="https://portal.jne.gob.pe/portal" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           class="text-white underline font-normal hover:opacity-80">
+          Jurado Nacional de Elecciones (JNE)
+        </a>
+      </p>
+    </div>
+  </section>
+</div>

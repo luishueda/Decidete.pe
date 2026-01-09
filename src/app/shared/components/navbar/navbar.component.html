@@ -1,0 +1,154 @@
+<!-- Top Bar -->
+<div class="fixed top-0 left-0 w-full h-[6px] z-[1001] bg-gradient-to-r from-red-700 to-[red-700] shadow-[0_2px_4px_rgba(191,31,31,0.3)]"></div>
+
+<!-- Navbar -->
+<nav 
+  class="w-full sticky top-0 left-0 z-[1000] bg-white transition-all duration-300 pt-[6px]"
+  [ngClass]="scrolled ? 'shadow-[0_4px_12px_rgba(0,0,0,0.12)]' : 'shadow-[0_2px_8px_rgba(0,0,0,0.08)]'"
+>
+  <div class="max-w-[1400px] mx-auto px-8 h-[75px] flex justify-between items-center">
+    
+    <!-- Brand -->
+    <div class="flex items-center">
+      <a routerLink="/" class="flex items-center gap-2 no-underline transition-transform duration-200 hover:-translate-y-0.5">
+        <span class="text-[2rem] text-red-700 font-bold animate-[pulse_2s_ease-in-out_infinite]">★</span>
+        <h1 class="font-sans text-[1.75rem] font-bold text-black tracking-tight m-0 transition-colors duration-300 hover:text-red-700">
+          Decide.pe
+        </h1>
+      </a>
+    </div>
+
+    <!-- Mobile Menu Toggle -->
+    <button 
+      class="hidden max-md:block bg-transparent border-none cursor-pointer p-2 z-[1002] focus:outline-none"
+      (click)="toggleMobileMenu()"
+      aria-label="Toggle menu"
+    >
+      <span 
+        class="block w-[28px] h-[2px] bg-black relative transition-all duration-300"
+        [ngClass]="{'bg-transparent': mobileMenuOpen}"
+      >
+        <span 
+          class="absolute w-[28px] h-[2px] bg-black transition-all duration-300"
+          [ngClass]="mobileMenuOpen ? 'rotate-45 top-0' : '-top-[8px]'"
+        ></span>
+        <span 
+          class="absolute w-[28px] h-[2px] bg-black transition-all duration-300"
+          [ngClass]="mobileMenuOpen ? '-rotate-45 bottom-0' : '-bottom-[8px]'"
+        ></span>
+      </span>
+    </button>
+
+    <!-- Navigation Menu -->
+    <ul 
+      class="flex list-none gap-8 m-0 p-0 items-center max-md:fixed max-md:top-[81px] max-md:bg-white max-md:w-[280px] max-md:h-[calc(100vh-81px)] max-md:flex-col max-md:items-start max-md:p-8 max-md:gap-6 max-md:shadow-[-4px_0_12px_rgba(0,0,0,0.1)] max-md:overflow-y-auto transition-all duration-300 ease-in-out"
+      [ngClass]="{
+        'max-md:right-0': mobileMenuOpen,
+        'max-md:-right-full': !mobileMenuOpen,
+        'flex-1 justify-center': isAuthenticated
+      }"
+    >
+      <li *ngFor="let item of [
+        {path: '/nosotros', label: 'Nosotros'}, 
+        {path: '/quiz', label: 'Quiz electoral'}, 
+        {path: '/comparador', label: 'Comparador electoral'}, 
+        {path: '/portal', label: 'Portal de transparencia'}
+      ]" class="relative max-md:w-full">
+        <a 
+          [routerLink]="item.path"
+          (click)="mobileMenuOpen = false"
+          routerLinkActive="text-red-700 font-bold"
+          class="font-sans text-black font-semibold text-[0.95rem] no-underline transition-all duration-300 py-2 inline-block relative hover:text-red-700 hover:-translate-y-0.5 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-red-700 after:transition-all after:duration-300 hover:after:w-full max-md:text-[1.1rem] max-md:py-3 max-md:w-full"
+        >
+          {{ item.label }}
+        </a>
+      </li>
+    </ul>
+
+    <!-- User Auth Section -->
+    <div class="flex items-center ml-8 max-md:fixed max-md:bottom-5 max-md:right-5 max-md:ml-0 max-md:z-[1001]">
+      
+      <!-- Authenticated User -->
+      <div *ngIf="isAuthenticated; else guestTemplate" class="relative">
+        <button 
+          (click)="toggleUserMenu()"
+          class="w-[42px] h-[42px] rounded-full border-2 border-red-700 bg-transparent cursor-pointer p-0 transition-all duration-300 overflow-hidden hover:scale-105 hover:shadow-[0_4px_12px_rgba(191,31,31,0.3)] focus:outline-none max-md:w-[50px] max-md:h-[50px] max-md:shadow-[0_4px_12px_rgba(0,0,0,0.2)]"
+          aria-label="User menu"
+        >
+          <div class="w-full h-full flex items-center justify-center bg-red-700 text-white font-bold text-[1.1rem]">
+            {{ user?.nombre?.charAt(0)?.toUpperCase() || 'U' }}
+          </div>
+        </button>
+
+        <!-- User Dropdown Menu -->
+        <div 
+          *ngIf="userMenuOpen" 
+          class="absolute top-[calc(100%+12px)] right-0 w-[260px] bg-white rounded-xl shadow-[0_8px_24px_rgba(0,0,0,0.15)] py-3 z-[1000] animate-[dropdownSlide_0.2s_ease] border border-gray-100 max-md:bottom-[calc(100%+12px)] max-md:top-auto"
+        >
+          <!-- User Info Header -->
+          <div class="px-4 py-3">
+            <p class="font-sans font-bold text-base text-black mb-1">{{ user?.nombre }}</p>
+            <p class="font-sans font-light text-[0.85rem] text-gray-500">{{ user?.email }}</p>
+          </div>
+          
+          <div class="h-[1px] bg-gray-200 my-2"></div>
+
+          <!-- Menu Items -->
+          <a 
+            routerLink="/perfil" 
+            (click)="userMenuOpen = false" 
+            class="flex items-center gap-3 px-4 py-3 font-sans font-normal text-[0.95rem] text-black no-underline transition-all duration-200 cursor-pointer border-none bg-transparent w-full text-left hover:bg-gray-50 hover:text-red-700"
+          >
+            <svg class="w-[18px] h-[18px] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+            </svg>
+            Mi perfil
+          </a>
+          
+          <a 
+            routerLink="/historial" 
+            (click)="userMenuOpen = false" 
+            class="flex items-center gap-3 px-4 py-3 font-sans font-normal text-[0.95rem] text-black no-underline transition-all duration-200 cursor-pointer border-none bg-transparent w-full text-left hover:bg-gray-50 hover:text-red-700"
+          >
+            <svg class="w-[18px] h-[18px] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Historial de quizzes
+          </a>
+
+          <div class="h-[1px] bg-gray-200 my-2"></div>
+
+          <!-- Logout Button -->
+          <button 
+            (click)="handleLogout()" 
+            class="flex items-center gap-3 px-4 py-3 font-sans font-normal text-[0.95rem] text-red-700 transition-all duration-200 cursor-pointer border-none bg-transparent w-full text-left hover:bg-red-700/10"
+          >
+            <svg class="w-[18px] h-[18px] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+            </svg>
+            Cerrar sesión
+          </button>
+        </div>
+      </div>
+
+      <!-- Guest Template -->
+      <ng-template #guestTemplate>
+        <div class="flex items-center gap-3 max-md:shadow-[0_4px_12px_rgba(0,0,0,0.2)]">
+          <span class="hidden md:block text-[0.85rem] text-gray-600 font-medium">
+            Modo Invitado
+          </span>
+          <a 
+            routerLink="/login" 
+            class="flex items-center gap-2 px-5 py-[0.6rem] bg-transparent border-2 border-red-700 rounded-lg text-red-700 font-sans font-semibold text-[0.95rem] no-underline transition-all duration-300 cursor-pointer hover:bg-red-700 hover:text-white hover:-translate-y-0.5 hover:shadow-[0_4px_12px_rgba(191,31,31,0.3)] max-[480px]:px-3 max-[480px]:w-[50px] max-[480px]:h-[50px] max-[480px]:rounded-full max-[480px]:justify-center"
+          >
+            <svg class="w-5 h-5 transition-transform duration-300 hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+            </svg>
+            <span class="max-[480px]:hidden">Iniciar sesión</span>
+          </a>
+        </div>
+      </ng-template>
+
+    </div>
+  </div>
+</nav>

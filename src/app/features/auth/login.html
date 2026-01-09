@@ -1,0 +1,121 @@
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 py-8 px-4 mt-20">
+  <div class="w-full max-w-[450px]">
+    <div class="bg-white rounded-2xl shadow-[0_8px_24px_rgba(0,0,0,0.12)] p-10">
+      
+      <!-- Header -->
+      <div class="text-center mb-8">
+        <a routerLink="/" class="inline-flex items-center gap-2 no-underline mb-4">
+          <span class="text-[2rem] text-red-700 font-bold">★</span>
+          <h2 class="font-sans text-[1.75rem] font-bold text-gray-900 m-0">Decide.pe</h2>
+        </a>
+        <p class="font-sans text-lg text-gray-600 mt-2">
+          {{ isLogin ? 'Bienvenido de nuevo' : 'Crea tu cuenta' }}
+        </p>
+      </div>
+
+      <!-- Form -->
+      <form class="flex flex-col gap-5" (ngSubmit)="handleSubmit()">
+        
+        <!-- Nombre (solo registro) -->
+        <div class="flex flex-col gap-2" *ngIf="!isLogin">
+          <label for="nombre" class="font-sans font-semibold text-sm text-gray-900">
+            Nombre completo
+          </label>
+          <input
+            type="text"
+            id="nombre"
+            name="nombre"
+            [(ngModel)]="formData.nombre"
+            [required]="!isLogin"
+            placeholder="Juan Pérez"
+            class="font-sans px-4 py-3 border-2 border-gray-200 rounded-lg text-base transition-all focus:outline-none focus:border-red-700 focus:shadow-[0_0_0_3px_rgba(185,28,28,0.1)]"
+          />
+        </div>
+
+        <!-- Email -->
+        <div class="flex flex-col gap-2">
+          <label for="email" class="font-sans font-semibold text-sm text-gray-900">
+            Correo electrónico
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            [(ngModel)]="formData.email"
+            required
+            placeholder="ejemplo@correo.com"
+            class="font-sans px-4 py-3 border-2 border-gray-200 rounded-lg text-base transition-all focus:outline-none focus:border-red-700 focus:shadow-[0_0_0_3px_rgba(185,28,28,0.1)]"
+          />
+        </div>
+
+        <!-- Password -->
+        <div class="flex flex-col gap-2">
+          <label for="password" class="font-sans font-semibold text-sm text-gray-900">
+            Contraseña
+          </label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            [(ngModel)]="formData.password"
+            required
+            placeholder="••••••••"
+            class="font-sans px-4 py-3 border-2 border-gray-200 rounded-lg text-base transition-all focus:outline-none focus:border-red-700 focus:shadow-[0_0_0_3px_rgba(185,28,28,0.1)]"
+          />
+        </div>
+
+        <!-- Confirm Password (solo registro) -->
+        <div class="flex flex-col gap-2" *ngIf="!isLogin">
+          <label for="confirmPassword" class="font-sans font-semibold text-sm text-gray-900">
+            Confirmar contraseña
+          </label>
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            [(ngModel)]="formData.confirmPassword"
+            [required]="!isLogin"
+            placeholder="••••••••"
+            class="font-sans px-4 py-3 border-2 border-gray-200 rounded-lg text-base transition-all focus:outline-none focus:border-red-700 focus:shadow-[0_0_0_3px_rgba(185,28,28,0.1)]"
+          />
+        </div>
+
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          class="font-sans px-4 py-3 bg-red-700 text-white border-none rounded-lg text-base font-bold cursor-pointer transition-all mt-2 hover:bg-red-800 hover:-translate-y-0.5 hover:shadow-[0_4px_12px_rgba(185,28,28,0.3)]">
+          {{ isLogin ? 'Iniciar sesión' : 'Registrarse' }}
+        </button>
+      </form>
+
+      <!-- Divider -->
+      <div class="relative text-center my-6">
+        <div class="absolute left-0 right-0 top-1/2 h-px bg-gray-200"></div>
+        <span class="font-sans bg-white px-4 relative text-gray-600 text-sm">
+          o continúa como
+        </span>
+      </div>
+
+      <!-- Guest Button -->
+      <button
+        (click)="continueAsGuest()"
+        class="flex items-center justify-center gap-2 w-full px-4 py-3 bg-transparent border-2 border-gray-200 rounded-lg text-gray-900 font-sans font-semibold no-underline transition-all hover:border-gray-900 hover:bg-gray-50">
+        Continuar como invitado
+      </button>
+
+      <!-- Switch Mode -->
+      <div class="text-center mt-6 font-sans text-gray-600">
+        <p class="m-0">
+          {{ isLogin ? '¿No tienes una cuenta?' : '¿Ya tienes una cuenta?' }}
+          <button
+            type="button"
+            (click)="toggleMode()"
+            class="bg-transparent border-none text-red-700 font-bold cursor-pointer ml-2 underline hover:text-red-800">
+            {{ isLogin ? 'Regístrate' : 'Inicia sesión' }}
+          </button>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>

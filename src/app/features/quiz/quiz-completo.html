@@ -1,0 +1,66 @@
+<app-hero 
+  title="Quiz Exhaustivo" 
+  description="Responde todas las preguntas para obtener el resultado más preciso posible.">
+</app-hero>
+
+<main class="bg-gray-50 min-h-screen font-sans">
+  
+  <!-- Navegación superior -->
+  <section class="max-w-[1200px] mx-auto pt-8 px-4">
+    <button
+      (click)="volverAlMenu()"
+      class="bg-gray-200 border-none px-6 py-2 rounded-lg cursor-pointer font-medium transition-all flex items-center gap-2 hover:bg-gray-300">
+      ← Volver al Rápido
+    </button>
+  </section>
+
+  <!-- Loading State -->
+  <div *ngIf="loading && questions.length === 0" class="py-12 text-center min-h-[60vh]">
+    <div class="w-12 h-12 border-4 border-red-700 border-t-transparent rounded-full animate-spin mx-auto mb-5"></div>
+    <p>Cargando cuestionario completo...</p>
+  </div>
+
+  <!-- No hay preguntas -->
+  <div *ngIf="!loading && questions.length === 0" class="text-center py-10 text-red-600">
+    No hay preguntas disponibles.
+  </div>
+
+  <!-- Sección principal -->
+  <section *ngIf="questions.length > 0" class="max-w-[1200px] mx-auto py-8 px-4">
+    
+    <!-- Info y progreso -->
+    <div class="text-center mb-12">
+      <h2 class="text-[2.5rem] text-[#3885A5] mb-4">Cuestionario Completo</h2>
+      <p class="text-gray-600 text-lg mb-4">
+        Avance: {{ preguntasRespondidas }} de {{ questions.length }}
+      </p>
+      <div class="w-full max-w-[600px] h-2.5 bg-gray-300 rounded-md mx-auto overflow-hidden">
+        <div 
+          class="h-full bg-red-700 transition-all duration-300"
+          [style.width.%]="progresoPercentaje">
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid de preguntas -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+      <app-quiz-card
+        *ngFor="let q of questions"
+        [question]="q"
+        [selected]="answers[q.id_pregunta]"
+        (onChange)="handleAnswer(q.id_pregunta, $event)">
+      </app-quiz-card>
+    </div>
+
+    <!-- Footer con botón finalizar -->
+    <div class="text-center py-8 border-t-2 border-gray-200">
+      <button
+        (click)="handleFinalizar()"
+        [disabled]="loading"
+        [style.opacity]="loading ? 0.7 : 1"
+        class="bg-green-600 text-white border-none px-12 py-4 rounded-2xl cursor-pointer font-bold text-lg transition-all shadow-md hover:bg-green-700 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 disabled:cursor-not-allowed">
+        {{ loading ? 'Calculando...' : 'Ver Mis Resultados Finales' }}
+      </button>
+    </div>
+  </section>
+</main>

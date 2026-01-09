@@ -1,0 +1,88 @@
+<app-hero 
+  title="Quiz Rápido" 
+  description="Responde 6 preguntas clave para conocer tu afinidad política en segundos.">
+</app-hero>
+
+<main class="bg-gray-50 min-h-screen font-sans">
+  <!-- Cómo Funciona -->
+  <app-how-it-works></app-how-it-works>
+
+  <!-- Quiz Principal -->
+  <section class="text-center py-12 px-4 max-w-[800px] mx-auto">
+    <h2 class="text-[2.75rem] text-[#3885A5] mb-8 max-md:text-[2rem]">
+      Cuestionario Express ({{ questions.length }} preguntas)
+    </h2>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="py-10 text-center text-gray-600">
+      <div class="w-12 h-12 border-4 border-red-700 border-t-transparent rounded-full animate-spin mx-auto mb-5"></div>
+      Cargando preguntas...
+    </div>
+
+    <!-- No hay preguntas -->
+    <div *ngIf="!loading && questions.length === 0" class="py-10 text-center text-red-600">
+      No hay preguntas disponibles. Revisa tu base de datos.
+    </div>
+
+    <!-- Preguntas -->
+    <div *ngIf="!loading && questions.length > 0">
+      <app-quiz-card
+        *ngFor="let q of visibleQuestions"
+        [question]="q"
+        [selected]="answers[q.id_pregunta]"
+        (onChange)="handleAnswer(q.id_pregunta, $event)">
+      </app-quiz-card>
+
+      <!-- Navegación -->
+      <div class="flex flex-col items-center gap-8 mt-8">
+        
+        <!-- Botones -->
+        <div class="flex justify-center items-center gap-4">
+          <button
+            (click)="prev()"
+            [disabled]="current === 0"
+            class="border-none px-5 py-2 rounded-2xl cursor-pointer font-medium transition-all w-[180px] h-[40px] bg-gray-200 hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">
+            Anterior
+          </button>
+
+          <button
+            *ngIf="esUltimaPagina; else nextBtn"
+            (click)="handleFinalizar()"
+            class="border-none px-5 py-2 rounded-2xl cursor-pointer font-bold transition-all w-[180px] h-[40px] bg-green-600 text-white hover:bg-green-700">
+            Ver Resultados
+          </button>
+
+          <ng-template #nextBtn>
+            <button
+              (click)="next()"
+              class="border-none px-5 py-2 rounded-2xl cursor-pointer font-medium transition-all w-[180px] h-[40px] bg-red-700 text-white hover:bg-red-800">
+              Siguiente
+            </button>
+          </ng-template>
+        </div>
+
+        <!-- Barra de progreso -->
+        <div class="w-[540px] h-2 bg-gray-300 rounded overflow-hidden max-md:w-full">
+          <div 
+            class="h-full bg-red-700 transition-all duration-300"
+            [style.width.%]="progresoPercentaje">
+          </div>
+        </div>
+
+        <p class="text-gray-600">
+          Preguntas {{ current + 1 }}–{{ current + 2 > questions.length ? questions.length : current + 2 }} de {{ questions.length }}
+        </p>
+
+        <!-- Footer -->
+        <div class="flex flex-col items-center gap-8 mt-4">
+          <p class="text-gray-600 mt-0">¿Quieres un análisis más detallado?</p>
+          <button
+            (click)="irQuizCompleto()"
+            class="border border-red-700 text-red-700 bg-transparent rounded-3xl px-6 py-2 cursor-pointer transition-colors hover:bg-red-50">
+            Ir al Quiz Completo ➔
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

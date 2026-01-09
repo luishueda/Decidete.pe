@@ -1,0 +1,82 @@
+<div class="perfil-page bg-gray-50 min-h-screen pb-12">
+  
+  <!-- Hero personalizado -->
+  <app-hero 
+    *ngIf="usuario"
+    [title]="'Hola, ' + usuario.nombre" 
+    description="Gestiona tu información personal y revisa tu actividad reciente.">
+  </app-hero>
+
+  <!-- Contenedor flotante -->
+  <div class="perfil-container max-w-[600px] mx-auto -mt-12 px-5 relative z-10">
+    
+    <div class="perfil-card bg-white rounded-2xl p-10 shadow-2xl text-center">
+      
+      <!-- Encabezado -->
+      <div class="perfil-header mb-8 pb-6 border-b border-gray-200">
+        <!-- Avatar -->
+        <div class="perfil-avatar w-20 h-20 bg-red-700 text-white text-4xl font-bold rounded-full flex items-center justify-center mx-auto mb-4 border-4 border-white shadow-lg">
+          {{ inicial }}
+        </div>
+        
+        <h2 class="text-2xl font-bold text-gray-900 mb-2">Mi Cuenta</h2>
+        
+        <span class="inline-block bg-gray-100 text-gray-600 text-sm font-semibold px-4 py-1 rounded-full">
+          Ciudadano Informado
+        </span>
+      </div>
+
+      <!-- Datos del usuario -->
+      <div class="perfil-body text-left mb-8 space-y-4">
+        
+        <div class="perfil-row">
+          <label class="block text-xs text-gray-500 font-bold uppercase mb-2">
+            Nombre Completo
+          </label>
+          <p class="text-lg text-gray-900 font-medium bg-gray-50 px-4 py-3 rounded-lg border border-gray-200">
+            {{ nombreCompleto }}
+          </p>
+        </div>
+        
+        <div class="perfil-row">
+          <label class="block text-xs text-gray-500 font-bold uppercase mb-2">
+            Correo Electrónico
+          </label>
+          <p class="text-lg text-gray-900 font-medium bg-gray-50 px-4 py-3 rounded-lg border border-gray-200">
+            {{ usuario?.email }}
+          </p>
+        </div>
+
+        <div class="perfil-row">
+          <label class="block text-xs text-gray-500 font-bold uppercase mb-2">
+            ID de Usuario
+          </label>
+          <p class="text-lg text-gray-900 font-medium bg-gray-50 px-4 py-3 rounded-lg border border-gray-200">
+            #{{ usuario?.id || usuario?.id_usuario }}
+          </p>
+        </div>
+        
+      </div>
+
+      <!-- Botones de acción -->
+      <div class="perfil-actions flex flex-col gap-4">
+        
+        <button 
+          (click)="verHistorial()"
+          class="w-full bg-gray-900 text-white py-4 px-6 rounded-xl font-bold text-base cursor-pointer transition-all hover:bg-black shadow-md">
+          📜 Ver mi Historial de Resultados
+        </button>
+        
+        <button 
+          (click)="handleLogout()"
+          class="w-full bg-white text-red-700 border-2 border-red-700 py-3 px-6 rounded-xl font-bold text-base cursor-pointer transition-all hover:bg-red-700 hover:text-white">
+          Cerrar Sesión
+        </button>
+        
+      </div>
+
+    </div>
+    
+  </div>
+  
+</div>

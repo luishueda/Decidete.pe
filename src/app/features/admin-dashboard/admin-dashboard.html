@@ -1,0 +1,457 @@
+<div class="min-h-screen bg-gray-50 font-sans">
+  
+  <!-- TOPBAR -->
+  <div class="sticky top-0 z-50 bg-white border-b border-gray-200 px-8 h-[70px] flex items-center justify-between shadow-sm">
+    <div class="flex items-center gap-4">
+      <h1 class="text-2xl font-extrabold text-[#BF1F1F] flex items-center gap-2">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+        </svg>
+        Decide.pe
+      </h1>
+      <span class="text-gray-500 text-sm pl-4 border-l-2 border-gray-200">Panel de Administración</span>
+    </div>
+    <div class="flex items-center gap-4">
+      <div class="bg-gradient-to-br from-[#BF1F1F] to-[#9a1919] text-white px-4 py-2 rounded-full text-sm font-semibold shadow flex items-center gap-2">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+        </svg>
+        Administrador
+      </div>
+    </div>
+  </div>
+
+  <!-- LAYOUT -->
+  <div class="flex min-h-[calc(100vh-70px)]">
+    
+    <!-- SIDEBAR -->
+    <aside class="w-[280px] bg-[#1e293b] py-8 sticky top-[70px] h-[calc(100vh-70px)] overflow-y-auto">
+      <nav class="flex flex-col gap-2 px-4">
+        
+        <button 
+          (click)="cambiarTab('partidos')"
+          [class.bg-[rgba(191,31,31,0.15)]]="activeTab === 'partidos'"
+          [class.text-white]="activeTab === 'partidos'"
+          [class.border-l-[#BF1F1F]]="activeTab === 'partidos'"
+          [class.text-gray-400]="activeTab !== 'partidos'"
+          class="flex items-center gap-4 px-5 py-4 rounded-lg text-base font-medium cursor-pointer transition-all duration-200 border-l-[3px] border-transparent hover:bg-white/5 hover:text-white hover:translate-x-1">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+          </svg>
+          <span class="flex-1">Partidos</span>
+          <span class="bg-white/20 text-white px-2 py-0.5 rounded-full text-xs font-bold">{{dataPartidos.length}}</span>
+        </button>
+
+        <button 
+          (click)="cambiarTab('preguntas')"
+          [class.bg-[rgba(191,31,31,0.15)]]="activeTab === 'preguntas'"
+          [class.text-white]="activeTab === 'preguntas'"
+          [class.border-l-[#BF1F1F]]="activeTab === 'preguntas'"
+          [class.text-gray-400]="activeTab !== 'preguntas'"
+          class="flex items-center gap-4 px-5 py-4 rounded-lg text-base font-medium cursor-pointer transition-all duration-200 border-l-[3px] border-transparent hover:bg-white/5 hover:text-white hover:translate-x-1">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <span class="flex-1">Preguntas</span>
+          <span class="bg-white/20 text-white px-2 py-0.5 rounded-full text-xs font-bold">{{dataPreguntas.length}}</span>
+        </button>
+
+        <button 
+          (click)="cambiarTab('usuarios')"
+          [class.bg-[rgba(191,31,31,0.15)]]="activeTab === 'usuarios'"
+          [class.text-white]="activeTab === 'usuarios'"
+          [class.border-l-[#BF1F1F]]="activeTab === 'usuarios'"
+          [class.text-gray-400]="activeTab !== 'usuarios'"
+          class="flex items-center gap-4 px-5 py-4 rounded-lg text-base font-medium cursor-pointer transition-all duration-200 border-l-[3px] border-transparent hover:bg-white/5 hover:text-white hover:translate-x-1">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+          </svg>
+          <span class="flex-1">Usuarios</span>
+          <span class="bg-white/20 text-white px-2 py-0.5 rounded-full text-xs font-bold">{{dataUsuarios.length}}</span>
+        </button>
+
+        <button 
+          (click)="cambiarTab('historial')"
+          [class.bg-[rgba(191,31,31,0.15)]]="activeTab === 'historial'"
+          [class.text-white]="activeTab === 'historial'"
+          [class.border-l-[#BF1F1F]]="activeTab === 'historial'"
+          [class.text-gray-400]="activeTab !== 'historial'"
+          class="flex items-center gap-4 px-5 py-4 rounded-lg text-base font-medium cursor-pointer transition-all duration-200 border-l-[3px] border-transparent hover:bg-white/5 hover:text-white hover:translate-x-1">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+          </svg>
+          <span class="flex-1">Historial</span>
+          <span class="bg-white/20 text-white px-2 py-0.5 rounded-full text-xs font-bold">{{dataHistorial.length}}</span>
+        </button>
+
+      </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 p-10 overflow-y-auto">
+      
+      <!-- HEADER -->
+      <div class="flex justify-between items-start mb-8 pb-6 border-b-2 border-gray-200">
+        <div class="flex-1">
+          <h2 class="text-4xl font-extrabold text-gray-900 mb-2 uppercase">{{activeTab}}</h2>
+          <p class="text-gray-500 text-base">Gestión completa de {{activeTab}}</p>
+        </div>
+
+        <div class="flex gap-4" *ngIf="!showForm">
+          <label 
+            *ngIf="activeTab === 'partidos' || activeTab === 'preguntas'" 
+            class="bg-gradient-to-br from-blue-500 to-blue-700 text-white px-6 py-3 rounded-lg font-semibold text-base cursor-pointer transition-all duration-200 inline-flex items-center gap-2 shadow-sm hover:-translate-y-0.5 hover:shadow-md">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+            </svg>
+            Subir Excel
+            <input type="file" hidden accept=".csv, .xlsx" (change)="handleFileUpload($event, activeTab)" />
+          </label>
+          <button 
+            (click)="handleNuevo()"
+            class="bg-gradient-to-br from-green-500 to-green-700 text-white px-6 py-3 rounded-lg font-semibold text-base cursor-pointer transition-all duration-200 inline-flex items-center gap-2 shadow-sm hover:-translate-y-0.5 hover:shadow-md">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+            </svg>
+            Agregar Nuevo
+          </button>
+        </div>
+      </div>
+
+      <!-- CONTENIDO PRINCIPAL -->
+      <div>
+        
+        <!-- FORMULARIOS -->
+        <div *ngIf="showForm">
+          <!-- Partidos Form -->
+          <div *ngIf="activeTab === 'partidos'" class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 max-w-4xl mx-auto">
+            <div class="p-8 bg-gradient-to-br from-[#BF1F1F] to-[#9a1919] text-white">
+              <h3 class="text-3xl font-bold mb-2">{{editingId ? 'Editar Partido' : 'Nuevo Partido Político'}}</h3>
+              <p class="text-white/90">Completa los datos del partido o candidato</p>
+            </div>
+            <div class="p-8">
+              <div class="mb-6">
+                <label class="block text-sm font-semibold text-gray-900 mb-2">Nombre del Partido / Candidato *</label>
+                <input [(ngModel)]="formPartido.candidato" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-base focus:outline-none focus:border-[#BF1F1F]" placeholder="Ej: Partido Morado" />
+              </div>
+              <div class="grid grid-cols-2 gap-6 mb-6">
+                <div>
+                  <label class="block text-sm font-semibold text-gray-900 mb-2">Líder del Partido</label>
+                  <input [(ngModel)]="formPartido.lider" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-base focus:outline-none focus:border-[#BF1F1F]" placeholder="Nombre del líder" />
+                </div>
+                <div>
+                  <label class="block text-sm font-semibold text-gray-900 mb-2">Año de Fundación</label>
+                  <input type="number" [(ngModel)]="formPartido.anio_fundacion" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-base focus:outline-none focus:border-[#BF1F1F]" />
+                </div>
+              </div>
+              <div class="grid grid-cols-2 gap-6 mb-6">
+                <div>
+                  <label class="block text-sm font-semibold text-gray-900 mb-2">Color Representativo</label>
+                  <div class="flex items-center gap-4">
+                    <input type="color" [(ngModel)]="formPartido.pill_color" class="w-20 h-12 border-2 border-gray-200 rounded-lg cursor-pointer" />
+                    <span class="font-mono font-semibold text-gray-900">{{formPartido.pill_color}}</span>
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-sm font-semibold text-gray-900 mb-2">URL del Logo</label>
+                  <input [(ngModel)]="formPartido.logo" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-base focus:outline-none focus:border-[#BF1F1F]" placeholder="https://ejemplo.com/logo.png" />
+                </div>
+              </div>
+              <div class="mt-8 p-6 bg-gray-50 rounded-lg border-2 border-dashed border-gray-200">
+                <h4 class="text-lg font-bold text-gray-900 mb-6">Posicionamiento Ideológico</h4>
+                <div class="grid grid-cols-2 gap-6">
+                  <div>
+                    <label class="block text-sm font-semibold text-gray-900 mb-2">Eje Económico (-10 a +10)</label>
+                    <input type="range" min="-10" max="10" [(ngModel)]="formPartido.vec_eco" class="w-full h-2 rounded-full bg-gradient-to-r from-red-400 to-red-600" />
+                    <div class="flex justify-between items-center mt-3 text-sm">
+                      <span class="text-gray-600 font-medium">← Izquierda</span>
+                      <span class="text-[#BF1F1F] font-bold text-lg">{{formPartido.vec_eco}}</span>
+                      <span class="text-gray-600 font-medium">Derecha →</span>
+                    </div>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-semibold text-gray-900 mb-2">Eje Social (-10 a +10)</label>
+                    <input type="range" min="-10" max="10" [(ngModel)]="formPartido.vec_soc" class="w-full h-2 rounded-full bg-gradient-to-r from-red-400 to-red-600" />
+                    <div class="flex justify-between items-center mt-3 text-sm">
+                      <span class="text-gray-600 font-medium">← Liberal</span>
+                      <span class="text-[#BF1F1F] font-bold text-lg">{{formPartido.vec_soc}}</span>
+                      <span class="text-gray-600 font-medium">Conservador →</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="px-8 py-6 bg-gray-50 border-t border-gray-200 flex justify-end gap-4">
+              <button (click)="showForm = false" class="px-6 py-3 bg-gray-200 text-gray-900 rounded-lg font-semibold hover:bg-gray-300">Cancelar</button>
+              <button (click)="handleGuardar()" class="px-6 py-3 bg-gradient-to-br from-[#BF1F1F] to-[#9a1919] text-white rounded-lg font-semibold hover:shadow-md flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/>
+                </svg>
+                {{editingId ? 'Actualizar' : 'Guardar'}}
+              </button>
+            </div>
+          </div>
+
+          <!-- Preguntas Form -->
+          <div *ngIf="activeTab === 'preguntas'" class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 max-w-4xl mx-auto">
+            <div class="p-8 bg-gradient-to-br from-[#BF1F1F] to-[#9a1919] text-white">
+              <h3 class="text-3xl font-bold mb-2">{{editingId ? 'Editar Pregunta' : 'Nueva Pregunta'}}</h3>
+              <p class="text-white/90">Define una pregunta para el cuestionario electoral</p>
+            </div>
+            <div class="p-8">
+              <div class="mb-6">
+                <label class="block text-sm font-semibold text-gray-900 mb-2">Enunciado de la Pregunta *</label>
+                <textarea [(ngModel)]="formPregunta.enunciadopregunta" rows="3" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-base focus:outline-none focus:border-[#BF1F1F] resize-vertical min-h-[80px]"></textarea>
+              </div>
+              <div class="grid grid-cols-2 gap-6 mb-6">
+                <div>
+                  <label class="block text-sm font-semibold text-gray-900 mb-2">Categoría</label>
+                  <select [(ngModel)]="formPregunta.temacategoria" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-base focus:outline-none focus:border-[#BF1F1F]">
+                    <option>Economía</option>
+                    <option>Social</option>
+                    <option>Seguridad</option>
+                    <option>Salud</option>
+                    <option>Educación</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-semibold text-gray-900 mb-2">Peso de Importancia</label>
+                  <input type="number" step="0.1" [(ngModel)]="formPregunta.peso_impacto" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-base focus:outline-none focus:border-[#BF1F1F]" />
+                </div>
+              </div>
+              <div class="mt-8 p-6 bg-gray-50 rounded-lg border-2 border-dashed border-gray-200">
+                <h4 class="text-lg font-bold text-gray-900 mb-6">Vector de Influencia (al responder "SÍ")</h4>
+                <div class="grid grid-cols-2 gap-6">
+                  <div>
+                    <label class="block text-sm font-semibold text-gray-900 mb-2">Influencia Económica</label>
+                    <select [(ngModel)]="formPregunta.vec_eco" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-base focus:outline-none focus:border-[#BF1F1F]">
+                      <option value="0">Neutro</option>
+                      <option value="-1">← Hacia la Izquierda</option>
+                      <option value="1">Hacia la Derecha →</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-semibold text-gray-900 mb-2">Influencia Social</label>
+                    <select [(ngModel)]="formPregunta.vec_soc" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-base focus:outline-none focus:border-[#BF1F1F]">
+                      <option value="0">Neutro</option>
+                      <option value="-1">Hacia Liberal</option>
+                      <option value="1">Hacia Conservador</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="px-8 py-6 bg-gray-50 border-t border-gray-200 flex justify-end gap-4">
+              <button (click)="showForm = false" class="px-6 py-3 bg-gray-200 text-gray-900 rounded-lg font-semibold hover:bg-gray-300">Cancelar</button>
+              <button (click)="handleGuardar()" class="px-6 py-3 bg-gradient-to-br from-[#BF1F1F] to-[#9a1919] text-white rounded-lg font-semibold hover:shadow-md flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/>
+                </svg>
+                {{editingId ? 'Actualizar' : 'Guardar'}}
+              </button>
+            </div>
+          </div>
+
+          <!-- Usuarios Form -->
+          <div *ngIf="activeTab === 'usuarios'" class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 max-w-4xl mx-auto">
+            <div class="p-8 bg-gradient-to-br from-[#BF1F1F] to-[#9a1919] text-white">
+              <h3 class="text-3xl font-bold mb-2">{{editingId ? 'Editar Usuario' : 'Nuevo Usuario'}}</h3>
+              <p class="text-white/90">Administra los datos del usuario</p>
+            </div>
+            <div class="p-8">
+              <div class="mb-6">
+                <label class="block text-sm font-semibold text-gray-900 mb-2">Nombre Completo *</label>
+                <input [(ngModel)]="formUsuario.nombre" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-base focus:outline-none focus:border-[#BF1F1F]" />
+              </div>
+              <div class="grid grid-cols-2 gap-6">
+                <div>
+                  <label class="block text-sm font-semibold text-gray-900 mb-2">Email *</label>
+                  <input type="email" [(ngModel)]="formUsuario.email" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-base focus:outline-none focus:border-[#BF1F1F]" />
+                </div>
+                <div>
+                  <label class="block text-sm font-semibold text-gray-900 mb-2">{{editingId ? 'Nueva Contraseña (Opcional)' : 'Contraseña *'}}</label>
+                  <input type="password" [(ngModel)]="formUsuario.password" [placeholder]="editingId ? 'Dejar vacío para no cambiar' : '••••••••'" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-base focus:outline-none focus:border-[#BF1F1F]" />
+                </div>
+              </div>
+            </div>
+            <div class="px-8 py-6 bg-gray-50 border-t border-gray-200 flex justify-end gap-4">
+              <button (click)="showForm = false" class="px-6 py-3 bg-gray-200 text-gray-900 rounded-lg font-semibold hover:bg-gray-300">Cancelar</button>
+              <button (click)="handleGuardar()" class="px-6 py-3 bg-gradient-to-br from-[#BF1F1F] to-[#9a1919] text-white rounded-lg font-semibold hover:shadow-md flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/>
+                </svg>
+                {{editingId ? 'Actualizar' : 'Crear'}}
+              </button>
+            </div>
+          </div>
+
+          <!-- Historial Form -->
+          <div *ngIf="activeTab === 'historial'" class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 max-w-4xl mx-auto">
+            <div class="p-8 bg-gradient-to-br from-[#BF1F1F] to-[#9a1919] text-white">
+              <h3 class="text-3xl font-bold mb-2">{{editingId ? 'Editar Historial' : 'Nuevo Historial'}}</h3>
+            </div>
+            <div class="p-8">
+              <div class="grid grid-cols-3 gap-6">
+                <div>
+                  <label class="block text-sm font-semibold text-gray-900 mb-2">Usuario</label>
+                  <select [(ngModel)]="formHistorial.usuario_id" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-base focus:outline-none focus:border-[#BF1F1F]">
+                    <option value="">-- Seleccionar --</option>
+                    <option *ngFor="let u of dataUsuarios" [value]="u.id_usuario">{{u.nombre}}</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-semibold text-gray-900 mb-2">Partido</label>
+                  <select [(ngModel)]="formHistorial.partido_id" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-base focus:outline-none focus:border-[#BF1F1F]">
+                    <option value="">-- Seleccionar --</option>
+                    <option *ngFor="let p of dataPartidos" [value]="p.id_partidopolitico">{{p.candidato}}</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-sm font-semibold text-gray-900 mb-2">Similitud (%)</label>
+                  <input type="number" [(ngModel)]="formHistorial.similitud_pct" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-base focus:outline-none focus:border-[#BF1F1F]" />
+                </div>
+              </div>
+            </div>
+            <div class="px-8 py-6 bg-gray-50 border-t border-gray-200 flex justify-end gap-4">
+              <button (click)="showForm = false" class="px-6 py-3 bg-gray-200 text-gray-900 rounded-lg font-semibold hover:bg-gray-300">Cancelar</button>
+              <button (click)="handleGuardar()" class="px-6 py-3 bg-gradient-to-br from-[#BF1F1F] to-[#9a1919] text-white rounded-lg font-semibold hover:shadow-md flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/>
+                </svg>
+                {{editingId ? 'Actualizar' : 'Guardar'}}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TABLAS -->
+        <div *ngIf="!showForm" class="bg-white rounded-xl shadow overflow-hidden border border-gray-200">
+          <table class="w-full">
+            <thead class="bg-gray-50 border-b-2 border-gray-200">
+              <tr *ngIf="activeTab === 'partidos'">
+                <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">ID</th>
+                <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Candidato</th>
+                <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Líder</th>
+                <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Color</th>
+                <th class="px-6 py-4 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">Acciones</th>
+              </tr>
+              <tr *ngIf="activeTab === 'preguntas'">
+                <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">ID</th>
+                <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Pregunta</th>
+                <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Cat</th>
+                <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Peso</th>
+                <th class="px-6 py-4 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">Acciones</th>
+              </tr>
+              <tr *ngIf="activeTab === 'usuarios'">
+                <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">ID</th>
+                <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Nombre</th>
+                <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Email</th>
+                <th class="px-6 py-4 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">Acciones</th>
+              </tr>
+              <tr *ngIf="activeTab === 'historial'">
+                <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">ID</th>
+                <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Usuario</th>
+                <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Partido</th>
+                <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">%</th>
+                <th class="px-6 py-4 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">Acciones</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+              <!-- Partidos -->
+              <tr *ngFor="let p of dataPartidos" [hidden]="activeTab !== 'partidos'" class="hover:bg-gray-50 transition-colors">
+                <td class="px-6 py-5"><span class="text-gray-500 font-semibold font-mono">#{{p.id_partidopolitico}}</span></td>
+                <td class="px-6 py-5"><strong class="text-gray-900">{{p.candidato}}</strong></td>
+                <td class="px-6 py-5 text-gray-600">{{p.lider || '-'}}</td>
+                <td class="px-6 py-5"><div class="w-10 h-6 rounded border-2 border-gray-200 shadow-sm" [style.backgroundColor]="p.pill_color"></div></td>
+                <td class="px-6 py-5 text-center">
+                  <button (click)="handleEdit(p, 'partidos')" class="w-10 h-10 inline-flex items-center justify-center rounded-lg text-amber-500 hover:bg-amber-50 transition-colors mr-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                    </svg>
+                  </button>
+                  <button (click)="handleDelete(p.id_partidopolitico, 'partido')" class="w-10 h-10 inline-flex items-center justify-center rounded-lg text-red-500 hover:bg-red-50 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                  </button>
+                </td>
+              </tr>
+              <!-- Preguntas -->
+              <tr *ngFor="let q of dataPreguntas" [hidden]="activeTab !== 'preguntas'" class="hover:bg-gray-50 transition-colors">
+                <td class="px-6 py-5"><span class="text-gray-500 font-semibold font-mono">#{{q.id_pregunta}}</span></td>
+                <td class="px-6 py-5 max-w-md text-gray-900">{{q.enunciadopregunta}}</td>
+                <td class="px-6 py-5"><span class="inline-block px-3 py-1 bg-gradient-to-br from-blue-500 to-blue-700 text-white rounded-full text-xs font-semibold">{{q.temacategoria}}</span></td>
+                <td class="px-6 py-5 text-gray-600">{{q.peso_impacto}}</td>
+                <td class="px-6 py-5 text-center">
+                  <button (click)="handleEdit(q, 'preguntas')" class="w-10 h-10 inline-flex items-center justify-center rounded-lg text-amber-500 hover:bg-amber-50 transition-colors mr-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                    </svg>
+                  </button>
+                  <button (click)="handleDelete(q.id_pregunta, 'pregunta')" class="w-10 h-10 inline-flex items-center justify-center rounded-lg text-red-500 hover:bg-red-50 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                  </button>
+                </td>
+              </tr>
+              <!-- Usuarios -->
+              <tr *ngFor="let u of dataUsuarios" [hidden]="activeTab !== 'usuarios'" class="hover:bg-gray-50 transition-colors">
+                <td class="px-6 py-5"><span class="text-gray-500 font-semibold font-mono">#{{u.id_usuario}}</span></td>
+                <td class="px-6 py-5"><strong class="text-gray-900">{{u.nombre}}</strong></td>
+                <td class="px-6 py-5 text-gray-600">{{u.email}}</td>
+                <td class="px-6 py-5 text-center">
+                  <button (click)="handleEdit(u, 'usuarios')" class="w-10 h-10 inline-flex items-center justify-center rounded-lg text-amber-500 hover:bg-amber-50 transition-colors mr-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                    </svg>
+                  </button>
+                  <button (click)="handleDelete(u.id_usuario, 'usuario')" class="w-10 h-10 inline-flex items-center justify-center rounded-lg text-red-500 hover:bg-red-50 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                  </button>
+                </td>
+              </tr>
+              <!-- Historial -->
+              <tr *ngFor="let h of dataHistorial" [hidden]="activeTab !== 'historial'" class="hover:bg-gray-50 transition-colors">
+                <td class="px-6 py-5"><span class="text-gray-500 font-semibold font-mono">#{{h.id_historial}}</span></td>
+                <td class="px-6 py-5 text-gray-900">{{h.nombre_usuario || 'Invitado'}}</td>
+                <td class="px-6 py-5 text-gray-600">{{h.nombre_partido}}</td>
+                <td class="px-6 py-5"><span class="inline-block px-4 py-2 bg-gradient-to-br from-green-500 to-green-700 text-white rounded-full font-bold text-sm">{{h.similitud_pct}}%</span></td>
+                <td class="px-6 py-5 text-center">
+                  <button (click)="handleEdit(h, 'historial')" class="w-10 h-10 inline-flex items-center justify-center rounded-lg text-amber-500 hover:bg-amber-50 transition-colors mr-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                    </svg>
+                  </button>
+                  <button (click)="handleDelete(h.id_historial, 'historial')" class="w-10 h-10 inline-flex items-center justify-center rounded-lg text-red-500 hover:bg-red-50 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <!-- Empty State -->
+          <div *ngIf="(activeTab === 'partidos' && !dataPartidos.length) || 
+                      (activeTab === 'preguntas' && !dataPreguntas.length) || 
+                      (activeTab === 'usuarios' && !dataUsuarios.length) || 
+                      (activeTab === 'historial' && !dataHistorial.length)"
+               class="text-center py-16 px-8 text-gray-500">
+            <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
+            </svg>
+            <p>No hay datos disponibles</p>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+</div>

@@ -1,0 +1,119 @@
+<div class="min-h-screen bg-white">
+  
+  <!-- Hero -->
+  <app-hero 
+    title="Portal de Transparencia"
+    [description]="'Explora la información pública de los ' + partidos.length + ' partidos políticos inscritos'">
+  </app-hero>
+
+  <!-- Sección Informativa -->
+  <section class="bg-white py-16 px-8">
+    <div class="max-w-[1200px] mx-auto">
+      <h2 class="font-sans text-center text-[2rem] font-bold text-gray-900 mb-14 leading-tight">
+        Del discurso al dato: conoce a quién eliges
+      </h2>
+      
+      <div class="grid grid-cols-[400px_1fr] gap-16 items-center max-lg:grid-cols-1">
+        <!-- Ilustración -->
+        <div class="flex justify-center items-center">
+          <img 
+            [src]="portalImage" 
+            alt="Portal de Transparencia"
+            class="w-full max-w-[400px] h-auto block"
+          />
+        </div>
+
+        <!-- Texto -->
+        <div class="flex flex-col gap-4">
+          <p class="font-sans text-gray-900 text-base font-light leading-relaxed text-justify m-0">
+            El Portal de Transparencia Electoral reúne la información pública más relevante sobre los partidos políticos del Perú. Aquí puedes consultar planes de gobierno,
+            hojas de vida, financiamiento y compromisos de campaña, todo en un solo lugar y con datos verificados.
+            Nuestro objetivo es que cada ciudadano pueda comparar,
+            contrastar y decidir con criterio, sin tener que navegar entre cientos de páginas oficiales.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección Catálogo -->
+  <section class="bg-gray-50 py-14 px-8" id="catalogo-start">
+    <div class="max-w-[1200px] mx-auto">
+      <h2 class="font-sans text-[1.85rem] font-bold text-gray-900 text-center m-0 mb-8">
+        Catálogo Electoral 2026
+      </h2>
+
+      <!-- Buscador -->
+      <div class="flex justify-end items-center mb-10">
+        <div class="flex items-center">
+          <input
+            type="text"
+            placeholder="Buscar por partido o candidato..."
+            [(ngModel)]="searchTerm"
+            (ngModelChange)="onSearchChange()"
+            class="font-sans px-5 py-2.5 border border-gray-900 rounded-l-[40px] border-r-0 w-[280px] text-base font-light outline-none bg-white transition-all focus:border-[#3885a5] focus:shadow-[0_0_0_2px_rgba(56,133,165,0.15)]"
+          />
+          <button
+            class="font-sans bg-[#3885a5] text-white border border-gray-900 rounded-r-[40px] px-6 py-2.5 cursor-pointer text-base font-bold transition-colors shadow-md whitespace-nowrap hover:bg-[#2a627a]">
+            Buscar
+          </button>
+        </div>
+      </div>
+
+      <!-- Grid de Partidos -->
+      <div class="grid grid-cols-3 gap-8 mt-8 max-lg:grid-cols-2 max-md:grid-cols-1 max-md:gap-6">
+        
+        <!-- Loading Spinner -->
+        <div *ngIf="loading" class="col-span-full flex justify-center py-10">
+          <div class="w-10 h-10 border-4 border-gray-200 border-t-red-700 rounded-full animate-spin"></div>
+        </div>
+
+        <!-- Tarjetas de Partidos -->
+        <ng-container *ngIf="!loading">
+          <app-portal-card
+            *ngFor="let partido of currentPartidos"
+            [partido]="partido">
+          </app-portal-card>
+        </ng-container>
+
+        <!-- Sin Resultados -->
+        <p *ngIf="!loading && currentPartidos.length === 0" class="col-span-full text-center text-gray-600 text-base font-light py-12">
+          No se encontraron partidos políticos.
+        </p>
+      </div>
+
+      <!-- Paginación -->
+      <div *ngIf="totalPages > 1" class="flex justify-center items-center mt-12 gap-2 flex-wrap">
+        
+        <!-- Botón Anterior -->
+        <button
+          (click)="paginate(currentPage - 1)"
+          [disabled]="currentPage === 1"
+          class="px-5 py-2 bg-white border border-gray-300 rounded-lg cursor-pointer font-semibold text-gray-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 hover:border-gray-400">
+          Anterior
+        </button>
+
+        <!-- Números de Página -->
+        <button
+          *ngFor="let page of pageNumbers"
+          (click)="paginate(page)"
+          [class.bg-gray-800]="currentPage === page"
+          [class.text-white]="currentPage === page"
+          [class.border-gray-800]="currentPage === page"
+          [class.scale-110]="currentPage === page"
+          class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-300 bg-white cursor-pointer font-bold text-gray-600 transition-all hover:border-gray-800 hover:text-gray-800">
+          {{ page }}
+        </button>
+
+        <!-- Botón Siguiente -->
+        <button
+          (click)="paginate(currentPage + 1)"
+          [disabled]="currentPage === totalPages"
+          class="px-5 py-2 bg-white border border-gray-300 rounded-lg cursor-pointer font-semibold text-gray-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 hover:border-gray-400">
+          Siguiente
+        </button>
+      </div>
+
+    </div>
+  </section>
+</div>

@@ -1,0 +1,9 @@
+<div class="min-h-screen flex flex-col bg-gray-50 font-sans">
+  <app-navbar *ngIf="!isAdminRoute"></app-navbar>
+
+  <main class="flex-grow">
+    <router-outlet></router-outlet>
+  </main>
+
+  <app-footer *ngIf="!isAdminRoute"></app-footer>
+</div>

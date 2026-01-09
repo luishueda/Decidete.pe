@@ -1,0 +1,175 @@
+<div class="min-h-screen bg-gray-100 pb-12">
+
+<div class="min-h-screen bg-gray-100 pb-12">
+
+  <!-- SKELETON LOADER (más profesional que spinner) -->
+  <div *ngIf="loading" class="animate-pulse">
+    <!-- Header Skeleton -->
+    <div class="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-gray-300 py-5">
+      <div class="max-w-[1000px] w-full px-5 mx-auto flex items-center justify-center gap-10">
+        <div class="bg-gray-400 rounded-full w-[150px] h-[150px]"></div>
+        <div class="flex flex-col gap-3">
+          <div class="bg-gray-400 h-10 w-64 rounded"></div>
+          <div class="bg-gray-400 h-6 w-48 rounded"></div>
+          <div class="bg-gray-400 h-8 w-32 rounded-full"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content Skeleton -->
+    <div class="max-w-[1200px] mx-auto mt-12 px-5 grid grid-cols-[300px_1fr] gap-10 max-lg:grid-cols-1">
+      <!-- Sidebar Skeleton -->
+      <div class="bg-white p-8 rounded-3xl shadow-xl h-fit">
+        <div class="bg-gray-300 h-8 w-32 rounded mb-6"></div>
+        <div class="space-y-4">
+          <div class="bg-gray-200 h-16 rounded"></div>
+          <div class="bg-gray-200 h-16 rounded"></div>
+          <div class="bg-gray-200 h-16 rounded"></div>
+        </div>
+      </div>
+
+      <!-- Main Content Skeleton -->
+      <div class="bg-white p-12 rounded-3xl shadow-xl">
+        <div class="bg-gray-300 h-8 w-48 rounded mb-6"></div>
+        <div class="space-y-3 mb-8">
+          <div class="bg-gray-200 h-4 rounded"></div>
+          <div class="bg-gray-200 h-4 rounded"></div>
+          <div class="bg-gray-200 h-4 w-3/4 rounded"></div>
+        </div>
+        <div class="bg-gray-300 h-8 w-40 rounded mb-4"></div>
+        <div class="bg-gray-200 h-32 rounded"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ERROR STATE -->
+  <div *ngIf="error && !loading" class="flex flex-col items-center justify-center min-h-screen text-center px-8 py-10 bg-gradient-to-br from-gray-50 to-gray-200">
+    <div class="text-8xl mb-5">⚠️</div>
+    <h2 class="text-3xl text-red-600 mb-4 font-bold">Error al cargar el partido</h2>
+    <p class="text-lg text-gray-600 mb-8 max-w-md">{{ error }}</p>
+    <a routerLink="/portal" class="inline-block font-bold text-base px-5 py-3 rounded-lg transition-all border-2 border-red-700 text-red-700 hover:-translate-x-1 hover:opacity-80 hover:bg-gray-50">
+      ← Volver al Portal
+    </a>
+  </div>
+
+  <!-- CONTENT -->
+  <div *ngIf="!loading && !error && partido">
+    
+    <!-- HEADER CON COLOR DINÁMICO -->
+    <header class="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] mt-0 py-5 flex justify-center items-center shadow-lg"
+            [style.background-color]="colorTema">
+      <div class="max-w-[1000px] w-full px-5 flex items-center justify-center gap-10 flex-wrap">
+        
+        <!-- Logo -->
+        <div class="bg-white p-8 rounded-full shadow-2xl w-[150px] h-[150px] flex items-center justify-center overflow-hidden">
+          <img 
+            [src]="logoUrl" 
+            [alt]="'Logo de ' + nombrePartido"
+            (error)="handleImageError($event)"
+            class="w-full h-full object-contain mix-blend-multiply"
+          />
+        </div>
+
+        <!-- Info -->
+        <div class="text-left max-md:text-center">
+          <h1 class="font-sans text-4xl font-bold m-0 mb-3 text-white leading-tight max-md:text-3xl">
+            {{ nombrePartido }}
+          </h1>
+          <p class="font-sans text-base text-white/90 m-0 mb-4 font-light">
+            Líder: {{ lider }}
+          </p>
+          <span class="inline-block px-4 py-2 rounded-3xl text-sm font-bold uppercase shadow-md"
+                [style.background-color]="'white'"
+                [style.color]="colorTema">
+            {{ tendencia }}
+          </span>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTAINER PRINCIPAL -->
+    <div class="max-w-[1200px] mx-auto mt-12 px-5 grid grid-cols-[300px_1fr] gap-10 max-lg:grid-cols-1">
+      
+      <!-- SIDEBAR: FICHA TÉCNICA -->
+      <aside class="bg-white p-8 rounded-3xl shadow-xl h-fit sticky top-5">
+        <h3 class="text-2xl font-bold pb-4 mb-6 border-b-4"
+            [style.border-color]="colorTema"
+            [style.color]="colorTema">
+          Datos Clave
+        </h3>
+
+        <div class="flex flex-col gap-0 py-4 border-b border-gray-200">
+          <span class="text-sm font-semibold text-gray-600 uppercase tracking-wide">📅 Fundación:</span>
+          <span class="text-base text-gray-900 font-medium mt-1">{{ fundacion }}</span>
+        </div>
+
+        <div class="flex flex-col gap-0 py-4 border-b border-gray-200">
+          <span class="text-sm font-semibold text-gray-600 uppercase tracking-wide">🎯 Ideología:</span>
+          <span class="text-base text-gray-900 font-medium mt-1">{{ tendencia }}</span>
+        </div>
+
+        <div class="flex flex-col gap-0 py-4 border-b border-gray-200">
+          <span class="text-sm font-semibold text-gray-600 uppercase tracking-wide">🏛️ Estado:</span>
+          <span class="inline-block bg-gradient-to-r from-green-500 to-teal-400 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-md mt-1">
+            {{ representacion }}
+          </span>
+        </div>
+
+        <div class="flex flex-col gap-0 py-4">
+          <span class="text-sm font-semibold text-gray-600 uppercase tracking-wide">💰 Financiamiento:</span>
+          <span class="text-base text-gray-900 font-medium mt-1">{{ financiamiento }}</span>
+        </div>
+
+        <div class="mt-8 pt-5 border-t-2 border-gray-200">
+          <a routerLink="/portal" 
+             class="inline-block font-bold text-base px-5 py-3 rounded-lg transition-all border-2"
+             [style.color]="colorTema"
+             [style.border-color]="colorTema"
+             class="hover:-translate-x-1 hover:opacity-80 hover:bg-gray-50">
+            ← Volver al Portal
+          </a>
+        </div>
+      </aside>
+
+      <!-- CONTENIDO PRINCIPAL -->
+      <main class="bg-white p-12 rounded-3xl shadow-xl max-md:p-8">
+        
+        <!-- SECCIÓN: SOBRE EL PARTIDO -->
+        <section class="mb-10 pb-8 border-b-2 border-gray-100">
+          <h2 class="text-3xl font-bold text-gray-800 mb-5 relative inline-block after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-[60px] after:h-1 after:bg-gradient-to-r after:from-red-700 after:to-orange-500 after:rounded">
+            Sobre el Partido
+          </h2>
+          <p class="text-lg leading-relaxed text-gray-700 mb-4">{{ descripcion }}</p>
+          <p *ngIf="historia" class="text-base leading-relaxed text-gray-600 italic pl-5 border-l-4"
+             [style.border-left-color]="colorTema">
+            {{ historia }}
+          </p>
+        </section>
+
+        <!-- SECCIÓN: PROPUESTAS CLAVE -->
+        <section class="mb-10 pb-8 border-b-2 border-gray-100">
+          <h3 class="text-2xl font-semibold mb-4 flex items-center gap-3"
+              [style.color]="colorTema">
+            <span class="text-3xl">📌</span>
+            Propuestas Clave
+          </h3>
+          <div class="whitespace-pre-line text-lg leading-loose text-gray-800 p-5 bg-gray-50 rounded-xl border-l-4 border-blue-600">
+            {{ propuestas }}
+          </div>
+        </section>
+
+        <!-- SECCIÓN: ANTECEDENTES JUDICIALES -->
+        <section class="bg-gradient-to-br from-red-50 to-pink-50 p-6 rounded-2xl border-l-8 shadow-md"
+                 [style.border-left-color]="colorTema">
+          <h4 class="text-xl font-bold m-0 mb-3 flex items-center gap-3"
+              [style.color]="colorTema">
+            <span class="text-3xl">⚖️</span>
+            Antecedentes Judiciales
+          </h4>
+          <p class="text-base text-red-900 m-0 leading-relaxed">{{ sentencias }}</p>
+        </section>
+
+      </main>
+    </div>
+  </div>
+</div>
