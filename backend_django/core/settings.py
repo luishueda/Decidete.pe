@@ -136,3 +136,40 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:4200",  # Angular local
     "http://127.0.0.1:4200",
 ]
+
+# ===== CONFIGURACIÓN PARA PRODUCCIÓN (RENDER) =====
+# Solo se activa cuando DATABASE_URL está presente (en Render)
+import os
+
+if 'DATABASE_URL' in os.environ:
+    # PRODUCCIÓN: Configuración para Render
+    import dj_database_url
+    
+    # Usar SECRET_KEY de variable de entorno
+    SECRET_KEY = os.environ.get('SECRET_KEY', SECRET_KEY)
+    
+    # DEBUG debe ser False en producción
+    DEBUG = False
+    
+    # Permitir todos los hosts (Render maneja esto)
+    ALLOWED_HOSTS = ['*']
+    
+    # Configurar PostgreSQL de Render
+    DATABASES['default'] = dj_database_url.config(
+        default=os.environ.get('DATABASE_URL'),
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
+    
+    # Archivos estáticos con WhiteNoise
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    
+    # Agregar WhiteNoise al middleware
+    if 'whitenoise.middleware.WhiteNoiseMiddleware' not in MIDDLEWARE:
+        MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
+    
+    # CORS para frontend en Vercel (actualizar con tu URL)
+    CORS_ALLOWED_ORIGINS += [
+        "https://decidete-pe.vercel.app",  # Cambiar por tu URL de Vercel
+    ]
