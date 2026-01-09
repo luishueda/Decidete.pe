@@ -18,17 +18,15 @@ if PartidoPolitico.objects.exists():
 
 print("→ Cargando datos iniciales...")
 
-# Aquí cargaremos los datos manualmente
-# Por ahora, solo creamos un partido de prueba para verificar que funciona
+# Crear un partido de prueba
 PartidoPolitico.objects.create(
-    nombre_partido="Partido de Prueba",
-    lider_candidato="Candidato de Prueba",
-    ideologia="Centro",
-    posicion_economica=0.0,
-    posicion_social=0.0,
-    logo_url="https://via.placeholder.com/150",
-    color_partido="#FF0000",
-    descripcion="Partido de prueba para verificar deployment"
+    lider="Candidato de Prueba",
+    candidato="Candidato de Prueba",
+    anio_fundacion=2024,
+    pill_color="#FF0000",
+    logo="https://via.placeholder.com/150",
+    vector_ideologico="[0.0, 0.0]",
+    descripcion_corta="Partido de prueba para verificar deployment"
 )
 
 print("✓ Datos iniciales cargados exitosamente")
