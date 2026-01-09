@@ -169,7 +169,8 @@ if 'DATABASE_URL' in os.environ:
     if 'whitenoise.middleware.WhiteNoiseMiddleware' not in MIDDLEWARE:
         MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
     
-    # CORS para frontend en Vercel (actualizar con tu URL)
+    # CORS para frontend en Vercel
     CORS_ALLOWED_ORIGINS += [
-        "https://decidete-pe.vercel.app",  # Cambiar por tu URL de Vercel
+        "https://decidete-pe-git-main-luis-huedas-projects.vercel.app",
+        "https://decidete-pe.vercel.app",  # URL de producción
     ]
