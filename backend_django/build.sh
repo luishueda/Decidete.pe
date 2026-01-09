@@ -5,5 +5,5 @@ pip install -r requirements.txt
 python manage.py collectstatic --no-input
 python manage.py migrate
 
-# Cargar datos iniciales
-python manage.py loaddata datos_iniciales.json --ignorenonexistent || true
+# Cargar datos iniciales con script Python
+python load_initial_data.py || true
