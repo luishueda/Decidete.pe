@@ -1,5 +1,15 @@
 @import "tailwindcss";
 
+/* Prevenir scroll horizontal en móvil */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+body {
+  position: relative;
+}
+
 /* Animaciones personalizadas */
 @keyframes pulse {
 
