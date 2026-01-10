@@ -2,13 +2,14 @@ import { Component } from '@angular/core';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
+import { FloatingNavComponent } from './shared/components/floating-nav/floating-nav.component';
 import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent, FooterComponent, CommonModule],
+  imports: [RouterOutlet, NavbarComponent, FooterComponent, FloatingNavComponent, CommonModule],
   templateUrl: './app.component.html',
   styles: []
 })
