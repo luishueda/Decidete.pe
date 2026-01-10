@@ -53,7 +53,7 @@
       [disabled]="isCompararDisabled"
       [class.opacity-60]="isCompararDisabled"
       [class.cursor-not-allowed]="isCompararDisabled"
-      class="px-0 bg-blue-600 text-white border border-gray-900 rounded-r-[40px] border-l-0 text-base font-bold cursor-pointer transition-all shadow-md min-w-[120px] h-[45px] m-0 max-md:hidden hover:bg-blue-700 disabled:bg-gray-400">
+      class="px-6 bg-blue-600 text-white border border-gray-900 rounded-r-[40px] border-l-0 text-base font-bold cursor-pointer transition-all shadow-md min-w-[120px] h-[45px] m-0 hover:bg-blue-700 disabled:bg-gray-400 max-md:rounded-[40px] max-md:border-l max-md:w-full max-md:mt-3">
       Comparar
     </button>
   </div>
@@ -62,14 +62,14 @@
   <div *ngIf="mostrarTablas && datosComparacion" class="flex flex-col gap-10 w-full">
     
     <!-- TABLA GENERAL -->
-    <div class="mt-10 w-full">
-      <table class="w-[75vw] max-w-[1080px] border-collapse overflow-hidden mx-auto table-fixed bg-white">
+    <div class="mt-10 w-full overflow-x-auto">
+      <table class="w-[75vw] max-w-[1080px] border-collapse overflow-hidden mx-auto table-fixed bg-white max-md:w-full max-md:min-w-[600px]">
         <!-- Logos -->
         <thead>
           <tr class="bg-white">
-            <th class="bg-transparent w-[200px]"></th>
-            <th *ngFor="let partido of partidosSeleccionados" class="p-4 text-center border-b-2 border-white">
-              <img [src]="partido.logo" [alt]="partido.lider" class="h-40 w-auto max-w-[160px] object-contain mx-auto">
+            <th class="bg-transparent w-[200px] max-md:w-[100px]"></th>
+            <th *ngFor="let partido of partidosSeleccionados" class="p-4 text-center border-b-2 border-white max-md:p-2">
+              <img [src]="partido.logo" [alt]="partido.lider" class="h-40 w-auto max-w-[160px] object-contain mx-auto max-md:h-20 max-md:max-w-[80px]">
             </th>
           </tr>
         </thead>
