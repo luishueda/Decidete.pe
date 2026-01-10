@@ -15,12 +15,12 @@ interface TablaData {
   imports: [CommonModule],
   template: `
     <div class="w-full max-w-[900px] overflow-x-auto bg-white shadow-lg rounded-lg">
-      <table class="w-full border-collapse max-md:min-w-[400px]">
+      <table class="w-full border-collapse max-md:min-w-[320px]">
         <thead>
           <tr class="bg-red-700">
-            <th class="font-sans text-white font-bold text-sm p-4 text-left border-b-2 border-white max-md:p-1 max-md:text-[9px]">Tema</th>
+            <th class="font-sans text-white font-bold text-sm p-4 text-left border-b-2 border-white max-md:p-0.5 max-md:text-[7px]">Tema</th>
             <th *ngFor="let partido of data.partidos" 
-                class="font-sans text-white font-bold text-sm p-4 text-center border-b-2 border-white min-w-[150px] max-md:p-1 max-md:text-[9px] max-md:min-w-[70px]">
+                class="font-sans text-white font-bold text-sm p-4 text-center border-b-2 border-white min-w-[150px] max-md:p-0.5 max-md:text-[7px] max-md:min-w-[55px]">
               {{ partido }}
             </th>
           </tr>
